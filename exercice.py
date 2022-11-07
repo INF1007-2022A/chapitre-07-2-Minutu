@@ -4,20 +4,33 @@
 from collections import deque
 
 
-def get_fibonacci_number(TODO):
-	pass
+def get_fibonacci_number(n):
+	return (0 if n==0 else 1 if n ==1 else get_fibonacci_number(n-1)+get_fibonacci_number(n-2))
 
-def get_fibonacci_sequence(TODO):
-	pass
+def get_fibonacci_sequence(taille):
+	return [get_fibonacci_number(i) for i in range(taille)]
 
-def get_sorted_dict_by_decimals(TODO):
-	pass
+def get_sorted_dict_by_decimals(elems):
+	return dict(sorted(elems.items(), key = lambda e: e[1]%1))
 
 def fibonacci_numbers(length):
-	pass
+	n = 0
+	while n < length:
+		yield get_fibonacci_number(n)
+		n+=1
 
-def build_recursive_sequence_generator(TODO):
-	pass
+def build_recursive_sequence_generator(initial_values, recursive_def, keep_whole_sequence=False):
+	def recursive_generator(length):
+		for elem in initial_values[0:length]:
+			yield elem
+		last_elems = deque(initial_values)
+		for i in range(len(initial_values),length):
+			current_element = recursive_def(last_elems)
+			last_elems.append(current_element)
+			if not keep_whole_sequence:
+				last_elems.popleft()
+			yield current_element
+		return recursive_generator
 
 
 if __name__ == "__main__":
